@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>項目一覧</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="../static/css/main2.css">
+	<script type="text/javascript" src="../static/js/sample.js"></script>
+	<!--<script type="text/javascript" src="../static/js/test.js"></script>!-->
+	
+</head>
+<body>
+	<form name="read" action="/get" method="POST">
+		<div class="row">
+			<div class="col-12">
+				<header>
+					<h2>RPAnavi家電システム</h2>
+					<button class="logout-btn" type="button" name="logout" value="./logout" onClick="location.href=value">ログアウト<img class="logout-icon" src="../static/image/icon.png"></button>
+				</header>
+				<div class="hp">
+				<h4>■一覧</h4>
+				<div class="sort">
+					<select name="select-sort" id="select_sort" onChange="location.href=value">
+						{%for i in range(selectbox_length)%}
+						<option value="{{selectbox_value[i]}}">{{selectbox_name[i]}}</option>
+					
+						{% endfor %}
+					</select>
+				</div>
+				</div>
+
+
+				
+				
+					
+				
+				
+
+				<table border="1">
+
+				  <tr class="head-col">
+				    <th>差額順位</th> 
+				    <th>最安値との差額</th>
+				    <th>分類</th>
+				    <th>名称</th> 
+				    <th>価格.com</th> 
+				    <th>楽天<br>(購入数)</th>  
+				    <th>Amazon<br>(購入数)</th> 
+				    <th>Yahoo<br>(購入数)</th>
+				    <th>売値</th>
+				    <th>売却数</th>
+				    <th>更新日時</th>
+				    <th>       </th>
+				  </tr>
+				  {%for i in range(100)%}
+ 				  
+ 				  <tr class="sql-output" id="{{i}}">
+				  	
+				  	<th id="rank_{{i}}" value="">{{i+1}}</th>
+				  	<th id="sagaku_{{i}}"><input name="sagaku_{{i}}" type="hidden" value="{{lst[i][0]}}">￥{{lst[i][0]}}</th>
+				  	<th id="group_{{i}}"></th>
+				  	<th id="item_{{i}}"><input name="item_name_{{i}}" type="hidden" value="{{lst[i][1]}}">{{lst[i][1]}}</th>
+				  	<th id="dotcom_{{i}}"><input name="dotcom_{{i}}" type="hidden" value="{{lst[i][2]}}"><a href="#">￥{{lst[i][2]}}</a><br>
+				  		
+				  	</th>
+				  	<th class="rakuten_"id="rakuten_{{i}}"><input name="rakuten_{{i}}" type="hidden" value="{{lst[i][3]}}">
+				  	<p class="nedan"><a href="#" id="r_nedan_{{i}}">￥{{lst[i][3]}}</a></p>
+				  	<div class="yoko">
+					
+				  		<input class="minus-btn" type="button" name="downbtn_{{i}}" value="-"  onClick="countdown_rakuten({{i}})">
+				  		<input name="r_count_{{i}}" id="r_count_id_{{i}}" type="hidden" value="0">
+				  	    <div class="count-number" id="disp_count_rakuten_{{i}}">
+				  	    0
+				  		</div>
+				  	    <input class="pluss-btn" type="button" id="upbtn_{{i}}" value="+"  onClick="countup_rakuten({{i}})"><br>
+				  	    <p class="point">100point</p>
+
+				  	   
+				  	</div>
+				  	</th>
+				  	<th id="amazon_{{i}}"><input name="amazon_{{i}}" type="hidden" value="{{lst[i][4]}}"><p class="nedan"><a href="{{amazon_url}}" id="a_nedan_{{i}}" target="_blank" rel="noopener noreferrer">￥{{lst[i][4]}}</a></p>
+				  	<div class="yoko">
+			  			<input class="minus-btn" type="button" name="-btn" value="-" onClick="countdown_amazon({{i}})">
+			  			<input name="a_count_{{i}}" id="a_count_id_{{i}}" type="hidden" value="0">
+				  	    <div class="count-number" id="disp_count_amazon_{{i}}">0</div>
+				  	    <input class="pluss-btn" type="button" name="+btn" value="+" onClick="countup_amazon({{i}})">
+				  	    <p class="point">200point</p>
+				  	</div>
+				  	  
+				  	</th>
+				  	<th id="yahoo_{{i}}"><input name="yahoo_{{i}}" type="hidden" value="{{lst[i][5]}}"><p class="nedan"><a href="#" id="y_nedan_{{i}}">￥{{lst[i][5]}}</a></p>
+				  	<div class="yoko">
+				  		<input class="minus-btn" type="button" name="-btn" value="-" onClick="countdown_yahoo({{i}})">
+				  		<input name="y_count_{{i}}" id="y_count_id_{{i}}" type="hidden" value="0">
+				  	    <div class="count-number" id="disp_count_yahoo_{{i}}">0</div>
+				  	    <input class="pluss-btn" type="button" name="+btn" value="+" onClick="countup_yahoo({{i}})">
+				  	    <p class="point">300point</p>
+				  	</div>
+				  	</th>
+				  	<th id="sale_input">
+				  		<div class="yoko">
+				  		￥<input class="sell" type="number" name="sell_text_{{i}}" id="sale_inputbox_{{i}}" 
+				  		onInput="sliceMaxLength(this,7)" autocomplete="off"> 
+				  		</div>      
+				  	</th>
+				  	<th id="sail_num">
+				  	<div class="yoko">
+				  		<!--<input class="minus-btn-sale" type="button" name="-btn" value="-" onClick="countdown_sail({{i}})">!-->
+				  		<input name="s_count_{{i}}" id="s_count_id_{{i}}" type="hidden" value="0">
+				  	    <div class="count-number-sale" id="disp_count_sail_{{i}}">0</div>
+				  	    <!--<input class="pluss-btn-sale" type="button" name="+btn" value="+" onClick="countup_sail({{i}})">!-->
+				  	</div>        
+				  	</th>
+				  	{% if update[i]!=None %}
+				  	<th id="update_data">{{update[i]}}</th>
+				  	{% else %}
+				  	<th id="update_data"></th>
+				  	{% endif %}
+				  	<th id="save_btn">
+				  		<button class="save-btn" type="submit" name="save" value="save_value_{{i}}"><img class="save-icon" src="../static/image/icon2.png">保存</button>
+				  	</th>
+
+				  </tr>
+				  {% endfor %}
+
+
+
+
+				
+
+				</table>
+			
+			</div>
+		</div>
+	
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</form>
+</body>
+</html>

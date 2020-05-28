@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS SITE_MASTER_TABLE;
+CREATE TABLE `SITE_MASTER_TABLE` (
+  `No` int(11) NOT NULL AUTO_INCREMENT,
+  `ecsite_id` int(3) NOT NULL,
+  `ecsite_name` varchar(50) NOT NULL,
+  `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_person` varchar(30) NOT NULL DEFAULT 'system',
+  PRIMARY KEY (`No`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
